@@ -12,4 +12,10 @@
 ## Reste à faire : 
 - Renommé les images téléchargées
 - faire le système de pagination pour les pages 
-- rendre mon code modulaire avec des fonctions
+- rendre mon code modulaire avec des fonctions 
+- pour les stock des livres prendre de le nombre pas la chaine de caractères
+
+- expliquer que les 3 premières étapes je les ai faite dans le fichoer render et le reste dans un autre fichier
+- gestions des dossier, si un dossier contient déjà les images ne plus les mettres ou les supprimer et les remettre à voir 
+- si
+
