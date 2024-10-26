@@ -7,9 +7,10 @@ from download_functions import download_images
 
 
 all_categories = [] # correspond au tableau contenant toutes les catégories avec leurs nom et url
-books_url = []  # 
 
-
+books_url = []  
+if books_url : 
+    books_url.clear()
 #                             Récupérer une catéogorie parmi toutes, des livres et les mettre dans lun fichier csv
 def get_data_to_scrap(link) :
         url = link
@@ -24,9 +25,6 @@ def get_data_to_scrap(link) :
                     all_categories.clear()
                 all_categories.append((category_name, get_all_category['href'])) 
                 print(all_categories)
-                
-                     
-
                 for category, href in all_categories : 
                     # print(category)
                     if category == 'Womens Fiction' : 
