@@ -44,12 +44,12 @@ with open('books_categories.csv', 'r' , encoding='utf-8') as file :
         for category_price, price in sum_price.items() : 
             if category_price == category : 
                 middle_price[category_price] = round(price/count, 2)
-    print(middle_price)
+    # print(middle_price)
 
     # ////////////////////////////////// Affichage du diagramme circulaire ///////////////////////////////
     explode = [.2 if category == 'Womens Fiction' else .1 for category in category_counts_percent.keys()]
-    print(category_counts_percent)
-    plt.title("Le pourcentage de livres par catégories")
+    # print(category_counts_percent)
+    plt.title("Le pourcentage de livres par catégorie")
     plt.pie(
         category_counts_percent.values(), 
         labels = category_counts_percent.keys(),

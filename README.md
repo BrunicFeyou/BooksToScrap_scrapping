@@ -18,4 +18,5 @@
 - expliquer que les 3 premières étapes je les ai faite dans le fichoer render et le reste dans un autre fichier
 - gestions des dossier, si un dossier contient déjà les images ne plus les mettres ou les supprimer et les remettre à voir 
 - supprimer les print dans tous les fichiers
+- mettre tous les fichiers générés dans le gitignore
 
