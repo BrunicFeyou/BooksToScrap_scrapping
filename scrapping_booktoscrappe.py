@@ -23,9 +23,7 @@ def get_all_categories_data(link):
             category_href = get_all_category['href']
             all_categories.append((category_name, category_href))  
         for category, href in all_categories:
-            print(f"Category: {category}")
             get_all_url = urljoin(url, href.strip())
-            print(f"Category URL: {get_all_url}")
             while get_all_url:
                 try:
                     loop_pages(get_all_url, url, books_url)  # Pass books_url to loop_pages function
@@ -36,9 +34,9 @@ def get_all_categories_data(link):
                     if next_page:
                         next_page_url = next_page['href']
                         get_all_url = urljoin(get_all_url, next_page_url)
-                        print(f"Next page: {get_all_url}")
+                        
                     else:
-                        print('No more pages.')
+                        
                         break
 
                 except Exception as e:
@@ -53,7 +51,6 @@ def get_all_categories_data(link):
 def loop_pages(get_all_url, url, books_url):
     try:
         category_response = requests.get(get_all_url)
-        print(category_response)
         category_soup = BeautifulSoup(category_response.content, 'html.parser')
         all_categories_books = category_soup.select('li.col-xs-6.col-sm-4.col-md-3.col-lg-3 > article.product_pod > h3 > a')
         for all_category_book in all_categories_books:
@@ -62,7 +59,6 @@ def loop_pages(get_all_url, url, books_url):
             category_book_link = category_book_href.replace('../../..', '/catalogue')
             category_book_url = urljoin(url, category_book_link)
             books_url.append((category_book_name, category_book_url))
-            # print(f"{books_url} voici la liste des books")
     except requests.exceptions.RequestException as e:
         print(f"Error in fetching page data due to: {e}")
         
@@ -75,7 +71,6 @@ def get_all_books_data(books_url):  # books_url ajouté comme paramètre
         for book_name, book_url in books_url:
             try:
                 details_response = requests.get(book_url)
-                print(f"Fetching book details for CSV: {details_response}")
                 details_soup = BeautifulSoup(details_response.content, 'html.parser')
                 upc = details_soup.select_one('table > tr:nth-child(1) > td').text  # Sélecteur CSS simplifié pour upc
                 title = details_soup.find('h1').text

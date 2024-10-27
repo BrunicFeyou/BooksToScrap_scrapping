@@ -49,7 +49,7 @@ description_text1 = "Le graphique en barre illustrant la moyenne des prix des li
 
 image1 = ImageReader(graphique1)
 c.setFont("Helvetica-Bold", 12)
-c.drawString(50, 700, "Le pourcentage de livres par catégories (Graphique )") 
+c.drawString(50, 700, "Le pourcentage de livres par catégories (Graphique 2)") 
 c.setFont("Helvetica", 8)
 draw_limited_string(c, description_text1, 680, max_width=500)
 c.drawImage(image1, 50, 280, width=500, height=300)
@@ -63,4 +63,3 @@ c.save()
 
 
 
-# print(f"PDF généré avec succès : {pdf_path}")

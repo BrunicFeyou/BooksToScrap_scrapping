@@ -15,7 +15,6 @@ def download_images(folder) :
         for contain in contains_folder: 
             image_url = contain['image_url']
             file_name = contain['title']
-            # print(image_url)
             try:   
                 response = requests.get(image_url)
                 extension = image_url.split('.')[-1]
@@ -37,7 +36,6 @@ def download_all_categories_images(folder_images) :
         for contain in contains_folder: 
             image_url = contain['image_url']
             file_name = contain['title']
-            # print(image_url)
             try:   
                 response = requests.get(image_url)
                 extension = image_url.split('.')[-1]

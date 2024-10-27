@@ -20,19 +20,15 @@ with open('books_categories.csv', 'r' , encoding='utf-8') as file :
     # /////////////////////////////////////////// Graphique circulaire //////////////////////////////////
     for books in library_books : 
         category = books['category']
-        # print(category)
         price = books["price_excluding_tax"]
         all_books_count +=1 
         if category in category_counts :
             category_counts[category] +=1     
         else : 
             category_counts[category] = 1 
-            # print(category_counts)
-
         # /////////////////////////////////////////// Graphique en barre //////////////////////////////////
         price_value = float(price.replace('£', ''))
         if category in sum_price :   
-            # print(f"le sum_price = {sum_price[category]} et la catégorie = {category_counts[category]}") 
             sum_price[category] += price_value
         else : 
             sum_price[category] = price_value     
@@ -44,11 +40,9 @@ with open('books_categories.csv', 'r' , encoding='utf-8') as file :
         for category_price, price in sum_price.items() : 
             if category_price == category : 
                 middle_price[category_price] = round(price/count, 2)
-    # print(middle_price)
-
+  
     # ////////////////////////////////// Affichage du diagramme circulaire ///////////////////////////////
     explode = [.2 if category == 'Womens Fiction' else .1 for category in category_counts_percent.keys()]
-    # print(category_counts_percent)
     plt.title("Le pourcentage de livres par catégorie")
     plt.pie(
         category_counts_percent.values(), 
