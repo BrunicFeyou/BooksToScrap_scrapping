@@ -5,6 +5,8 @@ import os
 import shutil
 from download_functions import download_all_categories_images
 from urllib.parse import urljoin
+import re 
+import time
 
 all_categories = []
 books_url = []
@@ -12,8 +14,8 @@ books_url = []
 #                 Récupérer toutes les catéogories et toutes les informations de tous les livres et les mettre dans le fichier csv data-live
 def get_all_categories_data(link):
     url = link
-    all_categories = []  # Initialize all_categories list
-    books_url = []  # Initialize books_url list
+    all_categories = []  
+    books_url = []  
     try:
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -26,8 +28,7 @@ def get_all_categories_data(link):
             get_all_url = urljoin(url, href.strip())
             while get_all_url:
                 try:
-                    loop_pages(get_all_url, url, books_url)  # Pass books_url to loop_pages function
-                    # Fetch and parse the page for the 'next' link
+                    loop_pages(get_all_url, url, books_url)  
                     category_response = requests.get(get_all_url)
                     category_soup = BeautifulSoup(category_response.content, 'html.parser')
                     next_page = category_soup.select_one('li.next > a')
@@ -70,29 +71,34 @@ def get_all_books_data(books_url):  # books_url ajouté comme paramètre
 
         for book_name, book_url in books_url:
             try:
-                details_response = requests.get(book_url)
-                details_soup = BeautifulSoup(details_response.content, 'html.parser')
-                upc = details_soup.select_one('table > tr:nth-child(1) > td').text  # Sélecteur CSS simplifié pour upc
-                title = details_soup.find('h1').text
-                price_tax = details_soup.select_one('table > tr:nth-child(4) > td').text  # Sélecteur CSS simplifié pour price_tax
-                price = details_soup.select_one('table > tr:nth-child(3) > td').text  # Sélecteur CSS simplifié pour price
-                number_available = details_soup.select_one('p.instock.availability').text.strip()
-                product_description_tag = details_soup.select_one('article.product_page > p')
-                product_description = product_description_tag.text if product_description_tag else 'Description not available'
-                category = details_soup.select_one('ul.breadcrumb > li:nth-child(3) > a').text
-                review_rating = details_soup.select_one('table > tr:nth-child(7) > td').text  # Sélecteur CSS simplifié pour review_rating
-                image = details_soup.find('img')
-                image_url = urljoin(book_url, image['src'])  # Utilisation de urljoin pour image_url
-
-                writter.writerow([book_url, upc, title, price_tax, price, number_available, product_description, category, review_rating, image_url])
-
+                    details_response = requests.get(book_url)
+                    details_soup = BeautifulSoup(details_response.content, 'html.parser')
+                    upc = details_soup.select_one('table > tr:nth-child(1) > td').text  # Sélecteur CSS simplifié pour upc
+                    title = details_soup.find('h1').text
+                    print(upc)
+                    price_tax = details_soup.select_one('table > tr:nth-child(4) > td').text  # Sélecteur CSS simplifié pour price_tax
+                    price = details_soup.select_one('table > tr:nth-child(3) > td').text  # Sélecteur CSS simplifié pour price
+                    number_available = details_soup.select_one('p.instock.availability').text.strip()
+                    # pattern = r"\w+ (\d{2} \w)"
+                    # number_available_regex = re.search(pattern,number_available_tag)
+                    # if number_available_regex : 
+                    #     number_available = number_available_regex.group(1)
+                    #     print(number_available)
+                    product_description_tag = details_soup.select_one('article.product_page > p')
+                    product_description = product_description_tag.text if product_description_tag else 'Description not available'
+                    category = details_soup.select_one('ul.breadcrumb > li:nth-child(3) > a').text
+                    review_rating = details_soup.select_one('table > tr:nth-child(7) > td').text  # Sélecteur CSS simplifié pour review_rating
+                    image = details_soup.find('img')
+                    image_url = urljoin(book_url, image['src'])  # Utilisation de urljoin pour image_url
+                    writter.writerow([book_url, upc, title, price_tax, price, number_available, product_description, category, review_rating, image_url])
             except Exception as e:
-                print(f"Error accessing book details due to: {e}")
+                    print(f"Error accessing book details due to: {e}")
+                   
 
 
 
 get_all_categories_data('https://books.toscrape.com')
-download_all_categories_images('./download_all_images')
+download_all_categories_images('./download_all_images/all_categories')
 
 # http://books.toscrape.com/catalogue/category/books/mystery_3/index.html
 # http://books.toscrape.com/catalogue/category/books/mystery_3/page-2.html

@@ -89,7 +89,7 @@ get_data_to_scrap('https://books.toscrape.com')
 
 #     a partir du fichier csv télécherger les images des photos et les mettre dans un dossier
 
-download_images('./download_images')  
+download_images('./download_all_images/one_category')  
 
     
  
